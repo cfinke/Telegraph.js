@@ -1,0 +1,1 @@
+Telegraph.js is a JavaScript library that enables Morse code input on text fields via mouse clicks (or finger taps on touchscreens).
