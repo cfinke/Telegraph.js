@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<meta charset="ISO8859-1">
+		<title>Telegraph.js Test Suite</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
+		<script type="text/javascript" src="../telegraph.js"></script>
+		<script type="text/javascript">
+			function run() {
+				test("Invalid input", function () {
+					raises(
+						function () {
+							Telegraph.start();
+						},
+						function (ex) {
+							return ex === "Missing input element.";
+						},
+						"Empty element argument."
+					);
+					
+					raises(
+						function () {
+							var el = $("#telegraph-input-1").get(0);
+							
+							Telegraph.start(el, 15);
+						},
+						function (ex) {
+							return ex === "Invalid config format.";
+						},
+						"Invalid config format"
+					);
+					
+					var el = $("#telegraph-input-1").get(0);
+					
+					ok(Telegraph.start(el), "Initial start returns true.");
+					ok(!Telegraph.start(el), "Later starts return false.");
+					ok(!Telegraph.start(el), "Later starts return false.");
+					
+					Telegraph.stop(el);
+					
+					ok(Telegraph.start(el), "Start after stopping returns true.");
+				});
+			}
+		</script>
+	</head>
+	<body onload="run();">
+		<h1 id="qunit-header">Telegraph Test Suite</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<input type="hidden" id="telegraph-input-1" />
+	</body>
+</html>
